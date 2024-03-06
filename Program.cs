@@ -22,15 +22,13 @@ namespace myApp // Note: actual namespace depends on the project name.
 
             Console.WriteLine("----------------------------------------------\n\n\n");
 
-            Random rnd = new Random();
-            int num = rnd.Next(1,6);
-            string [] randomUSERnames = {"Juan", "Manny", "Daniel", "Pablo", "Andy", "Billy"};
+            string agree = "agree";
             string yes = "yes";
             string confirm = "";
-            string help = "help";
+
 
             Console.WriteLine("--- BANK OF COOPER ---");
-            Console.WriteLine("Welcome to the Bnk of Jeff where all your money can be trustet\n" +
+            Console.WriteLine("Welcome to the Bank of Cooper where all your money can be trustet\n" +
             "so you can live a little more easier. We thank you for joining with us!\n");
 
             while(confirm != yes)
@@ -75,9 +73,9 @@ namespace myApp // Note: actual namespace depends on the project name.
                         Console.WriteLine("- TERMS OF SERVICE -");
                         Console.WriteLine("In making an account with Bank of Cooper, you are agreeing to our terms of\n" +
                         "service of knowing that we will have sensitive connected you which we will keep safe at all times\n");
-                        Console.WriteLine("Type \"yes\" to officially confirm now");
+                        Console.WriteLine("Type \"agree\" to officially confirm now");
                         confirm = Console.ReadLine();
-                        if(confirm == yes)
+                        if(confirm == agree)
                         {
                         Console.WriteLine("Welcome " + firstName + ", you are now part of our family now!\n");
                         break;
