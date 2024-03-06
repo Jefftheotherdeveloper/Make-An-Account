@@ -20,7 +20,7 @@ namespace myApp // Note: actual namespace depends on the project name.
             Console.WindowHeight = 50;
 
 
-            Console.WriteLine("----------------------------------------------\n\n\n");
+            Console.WriteLine("-----------------------------------------------\n\n\n");
 
             string agree = "agree";
             string yes = "yes";
