@@ -24,7 +24,7 @@ namespace myApp // Note: actual namespace depends on the project name.
 
             Random rnd = new Random();
             int num = rnd.Next(1,6);
-            string [] randomUSERnames = {"Juan", "Manny", "Daniel", "Pablo", "Andy"};
+            string [] randomUSERnames = {"Juan", "Manny", "Daniel", "Pablo", "Andy", "Billy"};
             string yes = "yes";
             string confirm = "";
             string help = "help";
