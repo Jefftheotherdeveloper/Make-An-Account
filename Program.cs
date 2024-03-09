@@ -1,6 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System;
+using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Net.Security;
 using System.Threading.Channels;
@@ -12,80 +14,128 @@ namespace myApp // Note: actual namespace depends on the project name.
 {
     internal class Program
     {
+        static string userName;
+        static string password2;
+
+
+
+//Pop up Page
         static void Main(string[] args)
         {
 
-            Console.Title = "FirstRun";
+            Console.Title = "Make an Account";
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WindowHeight = 50;
+
 
 
             Console.WriteLine("-----------------------------------------------\n\n\n");
-
-            string agree = "agree";
-            string yes = "yes";
-            string confirm = "";
-
+            int[] confirmNumber = {1, 2};
 
             Console.WriteLine("--- BANK OF COOPER ---");
-            Console.WriteLine("Welcome to the Bank of Cooper where all your money can be trustet\n" +
-            "so you can live a little more easier. We thank you for joining with us!\n");
-
-            while(confirm != yes)
+            Console.WriteLine("Welcome to the Bank of Cooper where all your money can be trusted\n" +
+            "so you can live a little more easier!\n");
+            Console.WriteLine("If you don't have an account with us, please write \"1\" to make an\n" +
+            "account or if you have an account just write \"2\" to log in.");
+            string numchoice = Console.ReadLine();
+            if(numchoice == Convert.ToString(confirmNumber[0]))
             {
-            //Username and Email system
-            Console.WriteLine("To enter the main site and use all our features, you need to create\n" +
-            "an account. Please enter all the infomation required.\n");
+                Signup();
+            }
+            if(numchoice == Convert.ToString(confirmNumber[1]))
+            {
+                Login();
+            }
+        }
 
-            Console.Write("First Name: ");
-            string firstName = Console.ReadLine();
-            Console.WriteLine("");
-            Console.WriteLine("Now " + firstName + ", just a few more steps\n");
-            Console.Write("Email: ");
+//-------------------------------------------------------------------------------------------------------
+
+//Sign Up System
+        static void Signup()
+        {
+        string confirm = "";
+
+        while(confirm != "yes")
+        {
+            Console.WriteLine("\n" + "Redircting...\n");
+            Console.WriteLine("- Sign up Page -\n");
+            Console.WriteLine("To sign up, we will need some basic infomation. So please just\n" +
+            "follow the instructions below.\n");
+            Console.Write("Please only enter your first name: ");
+            string userRealfirstname = Console.ReadLine();
+            Console.Write("Now enter your last name: ");
+            string userReallastname = Console.ReadLine();
+            Console.Write("Please enter a personal email we can reach you at: ");
             string userEmail = Console.ReadLine();
-            Console.WriteLine();
-            Console.Write("Username: ");
-            string userName = Console.ReadLine();
+            Console.WriteLine("Now we are moving to the last important steps so please enter the rest of\n" +
+            "infomation carefully now. Please don't use your real name as your username or a easy paassword! You are\n" +
+            "allowed to change your these in the future but only after 30day(s) using our site.");
 
-            //Password system
-            Console.Write("Password: ");
-            string password = Console.ReadLine();
-
-            if(password == password)
+            Console.Write("Official username: ");
+            userName = Console.ReadLine();
+            
+            if(userName == userRealfirstname)
             {
-                Console.Write("Retype to confirm password:");
-                string password2 = Console.ReadLine();
-                if(password == password2)
-                {
-                    Console.WriteLine("");
-                    Console.WriteLine("Now please just make all the information you have put\n" +
-                    "in is correct. DO NOT SKIP THIS PART!\n");
-                    Console.WriteLine(" ---");
-                    Console.WriteLine("The email we can contact you is: " + userEmail);
-                    Console.WriteLine("Your username is " + userName);
-                    Console.WriteLine("Your offcial password is: " + password2);
-                    Console.WriteLine(" ---\n");
-                    Console.WriteLine("If everything is correct just type \"yes or y\" to comfirm and read the\n" +
-                    "term of services!");
-                    confirm = Console.ReadLine();
-                    if(confirm == yes)
-                    {
-                        Console.WriteLine("- TERMS OF SERVICE -");
-                        Console.WriteLine("In making an account with Bank of Cooper, you are agreeing to our terms of\n" +
-                        "service of knowing that we will have sensitive connected you which we will keep safe at all times\n");
-                        Console.WriteLine("Type \"agree\" to officially confirm now");
-                        confirm = Console.ReadLine();
-                        if(confirm == agree)
-                        {
-                        Console.WriteLine("Welcome " + firstName + ", you are now part of our family now!\n");
-                        break;
-                        }
-                    }
-                }
+                Console.WriteLine("\n" + "For security reasons, please don't use your real name\n");
             }
 
-            }//end of while loop
-            Console.ReadKey();
+            while(userName != userRealfirstname)
+            {
+            Console.Write("Official password: ");
+            string password = Console.ReadLine();
+            Console.Write("Please retype your password to confirm: ");
+            password2 = Console.ReadLine();
+                if(password == password2)
+                {
+                    Console.WriteLine("\nNow " + userRealfirstname + ", please check if everything seems correct. DO NOT RUSH THROUGH THIS PART!\n");
+                    Console.WriteLine(" --- ");
+                    Console.WriteLine("The email we can contact you is: " + userEmail);
+                    Console.WriteLine("Your username is: " + userName);
+                    Console.WriteLine("Your password is: " + password2);
+                    Console.WriteLine(" ---\n ");
+                    Console.WriteLine("If everything seems correct, type \"yes\" to confirm and read our terms of service.");
+                    confirm = Console.ReadLine();
+                    if(confirm == "yes")
+                    {
+                        Console.WriteLine("\n" + "- TERMS OF SERVICE -\n");
+                        Console.WriteLine("In making a account with Bank of Cooper, you are fully understanding that we have your sensitive\n" +
+                        "and priavte infomation. New users will have to pay a fee to delete their account if their account isn't 365 days (one year)\n" + 
+                        "old. If you fully understand and would like to agree then, please type \"yes\" then.");
+                        confirm = Console.ReadLine();
+                        if(confirm == "yes")
+                        {
+                            Console.WriteLine("\n" + "Welcome " + userName + ", to the Bank of Cooper!\n");
+                            Console.WriteLine("Redircting...\n");
+                            Login();
+                        }
+                        else
+                        {
+                            Console.WriteLine("It's understandable, maybe let's try again some other time!");
+                            break;
+                        }
+                    }                
+                }
+                if(password != password2)
+                {
+                    Console.WriteLine("\n" + "Passwords do not match. Please retype it.\n");
+                }
+            }
         }
+        }
+
+//-------------------------------------------------------------------------------------------------------
+
+//Log in System
+                static void Login() 
+        {
+            Console.WriteLine("- Login Page -\n");
+            Console.Write("Username: ");
+            userName = Console.ReadLine();
+            if(userName != userName)
+            {
+                Console.WriteLine("You may have misspelled or may not have an account with us\n");
+            }
+            
+        }
+        
     }
 }
