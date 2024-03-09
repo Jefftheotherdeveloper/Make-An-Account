@@ -6,6 +6,9 @@ using System.Globalization;
 using System.Linq.Expressions;
 using System.Net.Security;
 using System.Threading.Channels;
+using System.Text.Json;
+using System.ComponentModel.DataAnnotations;
+using System.Windows.Markup;
 //using System.Runtime.CompilerServices;
 //using System.Numerics;
 //using System.Security.Cryptography.X509Certificates;
@@ -16,6 +19,27 @@ namespace myApp // Note: actual namespace depends on the project name.
     {
         static string userName;
         static string password2;
+        static Dictionary<string, string> accounts = readFile();
+        //static Dictionary<string, string> accountBalances = readFile();
+
+        static void writeToFile(Dictionary<string, string> accounts){
+            File.WriteAllText("accounts.txt", JsonSerializer.Serialize(accounts));
+        }
+        // open the file and try to convert it to dictionary variable
+        // Dictionary is a key value pair 
+        static Dictionary<string, string> readFile(){
+            Dictionary<string, string> accounts = new Dictionary<string, string>();
+            try { 
+                var fileInput = JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText("accounts.txt"));
+                if (fileInput != null){
+                    accounts = fileInput;
+                }
+            }
+            catch {
+                // Heres were we might say we could not read the error or something but we dont need to do that
+            }
+            return accounts;
+        }
 
 
 
@@ -25,8 +49,6 @@ namespace myApp // Note: actual namespace depends on the project name.
 
             Console.Title = "Make an Account";
             Console.ForegroundColor = ConsoleColor.White;
-
-
 
             Console.WriteLine("-----------------------------------------------\n\n\n");
             int[] confirmNumber = {1, 2};
@@ -104,6 +126,15 @@ namespace myApp // Note: actual namespace depends on the project name.
                         if(confirm == "yes")
                         {
                             Console.WriteLine("\n" + "Welcome " + userName + ", to the Bank of Cooper!\n");
+                            // add to local dictionary 
+                            accounts.Add(userName, password2);
+                            
+                
+                            //save file
+                            writeToFile(accounts);
+                            // how to delete user
+                            // accounts.Remove(userName);
+                            // writeToFile(accounts);
                             Console.WriteLine("Redircting...\n");
                             Login();
                         }
@@ -129,10 +160,22 @@ namespace myApp // Note: actual namespace depends on the project name.
         {
             Console.WriteLine("- Login Page -\n");
             Console.Write("Username: ");
-            userName = Console.ReadLine();
-            if(userName != userName)
+             string userNameInput = Console.ReadLine();
+             // how to check for a user
+            if(accounts.ContainsKey(userNameInput) == true)
             {
-                Console.WriteLine("You may have misspelled or may not have an account with us\n");
+                Console.WriteLine("Enter password");
+                string userPasswordInput = Console.ReadLine();
+                // how to check specific user password
+                if (accounts[userNameInput].Equals(userPasswordInput)){
+                    Console.WriteLine("Welcome back\n");
+                } else {
+                    Console.WriteLine("Wrong password dummy\n");
+                    Login();
+                }
+            } else {
+                Console.WriteLine("User does not exist\n");
+                Signup();
             }
             
         }
