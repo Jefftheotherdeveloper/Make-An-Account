@@ -47,7 +47,7 @@ namespace myApp // Note: actual namespace depends on the project name.
         static void Main(string[] args)
         {
 
-            Console.Title = "Make an Account";
+            Console.Title = "Make an Account juan was here";
             Console.ForegroundColor = ConsoleColor.White;
 
             Console.WriteLine("-----------------------------------------------\n\n\n");
