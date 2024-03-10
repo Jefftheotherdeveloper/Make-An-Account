@@ -19,15 +19,19 @@ namespace myApp // Note: actual namespace depends on the project name.
     {
         static string userName;
         static string password2;
+
+//--------------------------------------- Made by Juan ---------------------------------------
         static Dictionary<string, string> accounts = readFile();
         //static Dictionary<string, string> accountBalances = readFile();
 
-        static void writeToFile(Dictionary<string, string> accounts){
+        static void writeToFile(Dictionary<string, string> accounts)
+        {
             File.WriteAllText("accounts.txt", JsonSerializer.Serialize(accounts));
         }
+
         // open the file and try to convert it to dictionary variable
-        // Dictionary is a key value pair 
-        static Dictionary<string, string> readFile(){
+        static Dictionary<string, string> readFile()
+        {
             Dictionary<string, string> accounts = new Dictionary<string, string>();
             try { 
                 var fileInput = JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText("accounts.txt"));
@@ -35,12 +39,12 @@ namespace myApp // Note: actual namespace depends on the project name.
                     accounts = fileInput;
                 }
             }
-            catch {
-                // Heres were we might say we could not read the error or something but we dont need to do that
+            catch 
+            {
             }
             return accounts;
         }
-
+//--------------------------------------- Made by Juan ---------------------------------------
 
 
 //Pop up Page
@@ -100,8 +104,7 @@ namespace myApp // Note: actual namespace depends on the project name.
                 Console.WriteLine("\n" + "For security reasons, please don't use your real name\n");
             }
 
-            while(userName != userRealfirstname)
-            {
+            else
             Console.Write("Official password: ");
             string password = Console.ReadLine();
             Console.Write("Please retype your password to confirm: ");
@@ -125,16 +128,9 @@ namespace myApp // Note: actual namespace depends on the project name.
                         confirm = Console.ReadLine();
                         if(confirm == "yes")
                         {
-                            Console.WriteLine("\n" + "Welcome " + userName + ", to the Bank of Cooper!\n");
-                            // add to local dictionary 
-                            accounts.Add(userName, password2);
-                            
-                
-                            //save file
-                            writeToFile(accounts);
-                            // how to delete user
-                            // accounts.Remove(userName);
-                            // writeToFile(accounts);
+                            Console.WriteLine("\n" + "Welcome " + userRealfirstname + ", to the Bank of Cooper!\n");
+                            accounts.Add(userName, password2); //adds to local dictionary
+                            writeToFile(accounts);             //saves to file
                             Console.WriteLine("Redircting...\n");
                             Login();
                         }
@@ -144,7 +140,6 @@ namespace myApp // Note: actual namespace depends on the project name.
                             break;
                         }
                     }                
-                }
                 if(password != password2)
                 {
                     Console.WriteLine("\n" + "Passwords do not match. Please retype it.\n");
@@ -156,29 +151,36 @@ namespace myApp // Note: actual namespace depends on the project name.
 //-------------------------------------------------------------------------------------------------------
 
 //Log in System
-                static void Login() 
-        {
+            static void Login() 
+            {
             Console.WriteLine("- Login Page -\n");
             Console.Write("Username: ");
-             string userNameInput = Console.ReadLine();
+            string userNameInput = Console.ReadLine();
+// ---- Made by Juan ----
              // how to check for a user
             if(accounts.ContainsKey(userNameInput) == true)
             {
-                Console.WriteLine("Enter password");
+                Console.Write("Password: ");
                 string userPasswordInput = Console.ReadLine();
                 // how to check specific user password
-                if (accounts[userNameInput].Equals(userPasswordInput)){
-                    Console.WriteLine("Welcome back\n");
-                } else {
-                    Console.WriteLine("Wrong password dummy\n");
+                while(accounts[userNameInput] == (userPasswordInput))
+                {
+                    Console.WriteLine("Welcome User to the Bank of Cooper!\n");
+                    break;
+                }
+                if(accounts[userNameInput] != (userPasswordInput))
+                {
+                    Console.WriteLine("Wrong password, please try again!");
                     Login();
                 }
-            } else {
-                Console.WriteLine("User does not exist\n");
+            } 
+            else 
+            {
+                Console.WriteLine("User does not exist, please make an account!\n");
                 Signup();
             }
             
-        }
+            }
         
     }
 }
